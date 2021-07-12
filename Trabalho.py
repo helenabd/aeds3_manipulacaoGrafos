@@ -102,13 +102,25 @@ def componentes_conexos_lista(G):
     global comp
     comp = [0 for i in range(len(G))]
     marca = 0
+    #número de componentes conexas
+    comp_con = 1
+    # lista de quantos grupos conexos têm
+    rastreio_comp_con=[]
     for u in range(len(G)):
         if comp[u] == 0:
             marca += 1
             busca_profundidade_rec_lista(G, u, marca)
     #Quantidade de componentes conexas = marca
-
-    aux = 1
+    pos_comp = comp[0]
+    #Varredura da lista de componentes para separação dos grupos
+    for j in range(len(comp)):
+        if j == 0:
+            rastreio_comp_con.append(comp[j])
+        elif j > 0 and rastreio_comp_con[j] != comp[j]:
+            rastreio_comp_con.append(comp[j])
+    print(f"Componentes conexas : {len(rastreio_comp_con)}")
+    for k in range(len(rastreio_comp_con)):
+        print(f"{rastreio_comp_con} vertices\n")
     print(comp)
 
 #if __name__ == 'Trabalho':
