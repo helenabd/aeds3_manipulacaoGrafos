@@ -103,7 +103,7 @@ def componentes_conexos_lista(G):
     comp = [0 for i in range(len(G))]
     marca = 0
     #número de componentes conexas
-    comp_con = 1
+    comp_con = 0
     # lista de quantos grupos conexos têm
     rastreio_comp_con=[]
     for u in range(len(G)):
@@ -116,12 +116,18 @@ def componentes_conexos_lista(G):
     for j in range(len(comp)):
         if j == 0:
             rastreio_comp_con.append(comp[j])
-        elif rastreio_comp_con[j] != comp[j]:
-            rastreio_comp_con.append(comp[j])
+            comp_con = comp[j]
+        elif j>0:
+            if comp_con != comp[j]:
+                rastreio_comp_con.append(comp[j])
+                comp_con = comp[j]
+
+    print("Teste conexas *")
+    print(f"{rastreio_comp_con}")
     print(f"Componentes conexas : {len(rastreio_comp_con)}")
     for k in range(len(rastreio_comp_con)):
-        print(f"{rastreio_comp_con} vertices\n")
-    print(comp)
+        print(f"{rastreio_comp_con[k]} vertices\n")
+    #print(comp)
 
 #if __name__ == 'Trabalho':
 
