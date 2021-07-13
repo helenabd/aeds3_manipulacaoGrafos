@@ -116,7 +116,7 @@ def componentes_conexos_lista(G):
     for j in range(len(comp)):
         if j == 0:
             rastreio_comp_con.append(comp[j])
-        elif j > 0 and rastreio_comp_con[j] != comp[j]:
+        elif rastreio_comp_con[j] != comp[j]:
             rastreio_comp_con.append(comp[j])
     print(f"Componentes conexas : {len(rastreio_comp_con)}")
     for k in range(len(rastreio_comp_con)):
