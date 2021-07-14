@@ -1,19 +1,17 @@
 def recebe_dados (nome):
     #Receber os dados
-    arquivo = open(nome, 'r')
 
-    #Recebe o cabeçalho com numero de vertices e arestas
+    #Recebe o cabeçalho com numero de vertiarquivo = open(nome, 'r')
+    arquivo = open(nome, 'r')
     linha = arquivo.readline()
     listaVA = linha.split(' ')
     num_vertice = int(listaVA[0])
     num_aresta = int(listaVA[1])
+    G = representacao(2, arquivo, num_vertice, num_aresta)
 
-    #Cria a lista e a matriz com os dados do arquivo
-    listaAdj = [[] for i in range(num_vertice)]
-    matAdj = [[0 for i in range(num_vertice)] for i in range(num_vertice)]
     vertice = [i for i in range(num_vertice)]
     aresta = []
-    for j in range(num_aresta):
+    """for j in range(num_aresta):
         linha = arquivo.readline()
         linha = linha.split(' ')
         origem = int(linha[0])
@@ -24,6 +22,7 @@ def recebe_dados (nome):
         matAdj[origem][destino] = peso
         matAdj[destino][origem] = peso
         aresta.append((origem, destino, peso))
+        aresta.append((destino, origem, peso))"""
 
     #print(listaAdj)
     #print(matAdj)
@@ -31,23 +30,48 @@ def recebe_dados (nome):
     #print(aresta)
     arquivo.close()
 
-    return listaAdj, matAdj, num_vertice, num_aresta
+    return num_vertice, num_aresta, G
 
 
-def representacao(listaAd, matrizAd, isMatriz):
+def representacao(isMatriz, arquivo, num_vertice, num_aresta):
     if isMatriz == 1:
-        print(matrizAd)
+        matAdj = [[0 for i in range(num_vertice)] for i in range(num_vertice)]
+        for j in range(num_aresta):
+            linha = arquivo.readline()
+            linha = linha.split(' ')
+            origem = int(linha[0])
+            destino = int(linha[1])
+            peso = int(linha[2])
+            matAdj[origem][destino] = peso
+            matAdj[destino][origem] = peso
+            #aresta.append((origem, destino, peso))
+            #aresta.append((destino, origem, peso))
+        return matrizAd
     else:
-        print(listaAd)
+        listaAdj = [[] for i in range(num_vertice)]
+        for j in range(num_aresta):
+            linha = arquivo.readline()
+            linha = linha.split(' ')
+            origem = int(linha[0])
+            destino = int(linha[1])
+            peso = int(linha[2])
+            listaAdj[origem].append((destino, peso))
+            listaAdj[destino].append((origem, peso))
+            #aresta.append((origem, destino, peso))
+            #aresta.append((destino, origem, peso))
+        return listaAdj
 
-def informacoes(listaAdj, vertices, arestas):
-    vMaior = listaAdj[0]
-    vMenor = listaAdj[0]
+def informacoes(G, vertices, arestas):
+    #Informações lista
+    vMaior = G[0]
+    vMenor = G[0]
     maior = 0
     menor = 99999
+    grau = []
     for i in range(vertices):
-        if listaAdj[i] != []:
-            aux = len(listaAdj[i])
+        if G[i] != []:
+            aux = len(G[i])
+            grau.append(aux)
             if aux > maior:
                 maior = aux
                 vMaior = i
@@ -58,13 +82,11 @@ def informacoes(listaAdj, vertices, arestas):
     print(f"Maior grau: {maior} - vertice:  {vMaior}")
     print(f"Menor grau: {menor} - vertice:  {vMenor}")
     print(f"Grau médio : {grauMedio}")
+    print(f"Frequencia relativa: ")
+    for n in range(menor, (maior+1)):
+        print(f"Grau {n}: {grau.count(n)/vertices}")
 
 
-    # verificar em cada posição da matriz ou lista
-        # maior
-        # menor
-        # grau médio
-        # frequencia relativa
 #def busca_largura_matriz(grafo, vertice_inicial):
     #salvar em um arquivo de cada linha o vértice e seu nível na árvore de busca
 #def busca_largura_lista(listaAdj, vertice_inicial):
@@ -90,6 +112,7 @@ def busca_profundidade_lista(G, s):
             if desempilhar:
                 S.pop()
     print(R)
+    
 def busca_profundidade_rec_lista(G, s, marca):
     comp[s] = marca
     for v in G[s]:
@@ -98,10 +121,13 @@ def busca_profundidade_rec_lista(G, s, marca):
             busca_profundidade_rec_lista(G, aux, marca)
 #def componentes_conexos_matriz(grafo):
     #descobrir a quantidade de componentes conexos e a quatidade de vértices de cada um deles
+
+
 def componentes_conexos_lista(G):
     global comp
     comp = [0 for i in range(len(G))]
     marca = 0
+    n = 0
     #número de componentes conexas
     comp_con = 0
     # lista de quantos grupos conexos têm
@@ -113,37 +139,25 @@ def componentes_conexos_lista(G):
     #Quantidade de componentes conexas = marca
     pos_comp = comp[0]
     #Varredura da lista de componentes para separação dos grupos
-    for j in range(len(comp)):
-        if j == 0:
-            rastreio_comp_con.append(comp[j])
-            comp_con = comp[j]
-        elif j>0:
-            if comp_con != comp[j]:
-                rastreio_comp_con.append(comp[j])
-                comp_con = comp[j]
-
-    print("Teste conexas *")
-    print(f"{rastreio_comp_con}")
-    print(f"Componentes conexas : {len(rastreio_comp_con)}")
-    for k in range(len(rastreio_comp_con)):
-        print(f"{rastreio_comp_con[k]} vertices\n")
+    n = max(comp)
+    print(f"Componentes conexas : {marca}")
+    for j in range(1,(n+1)):
+        print(f"{j}: {comp.count(j)} vertices")
     #print(comp)
+
 
 #if __name__ == 'Trabalho':
 
 #nome = input("Digite o nome do arquivo: ")
 
 #Entrada de dados
-
 dados = recebe_dados('teste.txt')
-lista = dados[0]
-matriz = dados[1]
-vertice = dados[2]
-aresta = dados[3]
+vertice = dados[0]
+aresta = dados[1]
+G = dados[2]
 #isMatriz = int(input("Tipo de Representação: \n1- Matriz \n2-Lista de Adjacencia: "))
-#representacao(lista, matriz, isMatriz)
-informacoes(lista, vertice, aresta)
-busca_profundidade_lista(lista, 0)
-componentes_conexos_lista(lista)
+informacoes(G, vertice, aresta)
+#busca_profundidade_lista(lista, 0)
+componentes_conexos_lista(G)
 
 
