@@ -112,7 +112,7 @@ def busca_profundidade_lista(G, s):
             if desempilhar:
                 S.pop()
     print(R)
-    
+
 def busca_profundidade_rec_lista(G, s, marca):
     comp[s] = marca
     for v in G[s]:
@@ -157,7 +157,7 @@ aresta = dados[1]
 G = dados[2]
 #isMatriz = int(input("Tipo de Representação: \n1- Matriz \n2-Lista de Adjacencia: "))
 informacoes(G, vertice, aresta)
-#busca_profundidade_lista(lista, 0)
+busca_profundidade_lista(G, 0)
 componentes_conexos_lista(G)
 
 
