@@ -7,7 +7,7 @@ def recebe_dados (nome):
     listaVA = linha.split(' ')
     num_vertice = int(listaVA[0])
     num_aresta = int(listaVA[1])
-    G = representacao(2, arquivo, num_vertice, num_aresta)
+    G = representacao(1, arquivo, num_vertice, num_aresta)
 
     vertice = [i for i in range(num_vertice)]
     aresta = []
@@ -46,7 +46,7 @@ def representacao(isMatriz, arquivo, num_vertice, num_aresta):
             matAdj[destino][origem] = peso
             #aresta.append((origem, destino, peso))
             #aresta.append((destino, origem, peso))
-        return matrizAd
+        return matAdj
     else:
         listaAdj = [[] for i in range(num_vertice)]
         for j in range(num_aresta):
@@ -61,7 +61,7 @@ def representacao(isMatriz, arquivo, num_vertice, num_aresta):
             #aresta.append((destino, origem, peso))
         return listaAdj
 
-def informacoes(G, vertices, arestas):
+def informacoes_lista(G, vertices, arestas):
     #Informações lista
     vMaior = G[0]
     vMenor = G[0]
@@ -86,7 +86,38 @@ def informacoes(G, vertices, arestas):
     for n in range(menor, (maior+1)):
         print(f"Grau {n}: {grau.count(n)/vertices}")
 
-
+def informacoes_matriz(G, vertices, arestas):
+    #Informações matriz
+    cont = 0
+    while(cont == 0):
+        for i in range(vertices):
+            for j in range(vertices):
+                if G[i][j] != 0:
+                    vMaior = G[i][j]
+                    vMenor = G[i][j]
+                    cont += 1
+    maior = 0
+    menor = 99999
+    grau = []
+    for i in range(vertices):
+        aux = 0
+        for j in range(vertices):
+            if G[i][j] != 0:
+                aux += 1
+        if aux > maior:
+            maior = aux
+            vMaior = i
+        if aux < menor:
+            menor = aux
+            vMenor = i
+        grau.append(aux)
+    grauMedio = (arestas * 2) / vertices
+    print(f"Maior grau: {maior} - vertice:  {vMaior}")
+    print(f"Menor grau: {menor} - vertice:  {vMenor}")
+    print(f"Grau médio : {grauMedio}")
+    print(f"Frequencia relativa: ")
+    for n in range(menor, (maior+1)):
+        print(f"Grau {n}: {grau.count(n)/vertices}")
 #def busca_largura_matriz(grafo, vertice_inicial):
     #salvar em um arquivo de cada linha o vértice e seu nível na árvore de busca
 def busca_largura_lista(G, s):
@@ -147,9 +178,6 @@ def busca_profundidade_lista(G, s):
                 break
             if desempilhar:
                 S.pop()
-<<<<<<< HEAD
-    print(R)
-=======
     #print(R)
     print("Busca por profundidade:")
     for j in range(len(G)):
@@ -160,7 +188,6 @@ def busca_profundidade_lista(G, s):
     for j in range(len(G)):
         if (nivel[j] != None):
             arquivo.write(f"{j}: {nivel[j]}\n")
->>>>>>> 596ae473d9416fe4a051a595463dddabec6b7a9d
 
 def busca_profundidade_rec_lista(G, s, marca):
     comp[s] = marca
@@ -205,12 +232,10 @@ vertice = dados[0]
 aresta = dados[1]
 G = dados[2]
 #isMatriz = int(input("Tipo de Representação: \n1- Matriz \n2-Lista de Adjacencia: "))
-informacoes(G, vertice, aresta)
+"""informacoes_lista(G, vertice, aresta)
 busca_profundidade_lista(G, 0)
-<<<<<<< HEAD
-=======
 busca_largura_lista(G, 0)
->>>>>>> 596ae473d9416fe4a051a595463dddabec6b7a9d
-componentes_conexos_lista(G)
+componentes_conexos_lista(G)"""
+informacoes_matriz(G, vertice, aresta)
 
 
