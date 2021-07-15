@@ -145,9 +145,12 @@ def busca_profundidade_lista(G, s):
                     nivel[aux] = nivel[u] + 1
                     marcado[aux] = True
                 break
-        if desempilhar:
-            S.pop()
+            if desempilhar:
+                S.pop()
+<<<<<<< HEAD
     print(R)
+=======
+    #print(R)
     print("Busca por profundidade:")
     for j in range(len(G)):
         if (nivel[j] != None):
@@ -157,6 +160,7 @@ def busca_profundidade_lista(G, s):
     for j in range(len(G)):
         if (nivel[j] != None):
             arquivo.write(f"{j}: {nivel[j]}\n")
+>>>>>>> 596ae473d9416fe4a051a595463dddabec6b7a9d
 
 def busca_profundidade_rec_lista(G, s, marca):
     comp[s] = marca
@@ -196,14 +200,17 @@ def componentes_conexos_lista(G):
 #nome = input("Digite o nome do arquivo: ")
 
 #Entrada de dados
-dados = recebe_dados('collaboration_graph.txt')
+dados = recebe_dados('teste.txt')
 vertice = dados[0]
 aresta = dados[1]
 G = dados[2]
 #isMatriz = int(input("Tipo de Representação: \n1- Matriz \n2-Lista de Adjacencia: "))
-#informacoes(G, vertice, aresta)
+informacoes(G, vertice, aresta)
 busca_profundidade_lista(G, 0)
+<<<<<<< HEAD
+=======
 busca_largura_lista(G, 0)
-#componentes_conexos_lista(G)
+>>>>>>> 596ae473d9416fe4a051a595463dddabec6b7a9d
+componentes_conexos_lista(G)
 
 
