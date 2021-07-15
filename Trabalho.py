@@ -7,7 +7,7 @@ def recebe_dados (nome):
     listaVA = linha.split(' ')
     num_vertice = int(listaVA[0])
     num_aresta = int(listaVA[1])
-    G = representacao(1, arquivo, num_vertice, num_aresta)
+    G = representacao(2, arquivo, num_vertice, num_aresta)
 
     vertice = [i for i in range(num_vertice)]
     aresta = []
@@ -195,25 +195,24 @@ def busca_profundidade_rec_lista(G, s, marca):
         aux = v[0]
         if comp[aux] == 0:
             busca_profundidade_rec_lista(G, aux, marca)
-#def componentes_conexos_matriz(grafo):
-    #descobrir a quantidade de componentes conexos e a quatidade de vértices de cada um deles
 
+def busca_profundidade_rec_matriz(G, i, j, marca):
+    comp[i][j] = marca
+    for v in G[s]:
+        aux = v[0]
+        if comp[aux] == 0:
+            busca_profundidade_rec_lista(G, aux, marca)
 
 def componentes_conexos_lista(G):
     global comp
     comp = [0 for i in range(len(G))]
     marca = 0
     n = 0
-    #número de componentes conexas
-    comp_con = 0
-    # lista de quantos grupos conexos têm
-    rastreio_comp_con=[]
     for u in range(len(G)):
         if comp[u] == 0:
             marca += 1
             busca_profundidade_rec_lista(G, u, marca)
     #Quantidade de componentes conexas = marca
-    pos_comp = comp[0]
     #Varredura da lista de componentes para separação dos grupos
     n = max(comp)
     print(f"Componentes conexas : {marca}")
@@ -221,6 +220,23 @@ def componentes_conexos_lista(G):
         print(f"{j}: {comp.count(j)} vertices")
     #print(comp)
 
+def componentes_conexos_matriz(G):
+    global comp
+    comp = [[0 for i in range(len(G))] for i in range(len(G))]
+    marca = 0
+    n = 0
+    for i in range(len(G)):
+        for j in range(len(G)):
+            if comp[i][j] == 0:
+                marca += 1
+                busca_profundidade_rec_matriz(G, i, j, marca)
+    #Quantidade de componentes conexas = marca
+    #Varredura da lista de componentes para separação dos grupos
+    n = max(comp)
+    print(f"Componentes conexas : {marca}")
+    for j in range(1,(n+1)):
+        print(f"{j}: {comp.count(j)} vertices")
+    #print(comp)
 
 #if __name__ == 'Trabalho':
 
@@ -234,8 +250,8 @@ G = dados[2]
 #isMatriz = int(input("Tipo de Representação: \n1- Matriz \n2-Lista de Adjacencia: "))
 """informacoes_lista(G, vertice, aresta)
 busca_profundidade_lista(G, 0)
-busca_largura_lista(G, 0)
-componentes_conexos_lista(G)"""
-informacoes_matriz(G, vertice, aresta)
+busca_largura_lista(G, 0)"""
+componentes_conexos_lista(G)
+#informacoes_matriz(G, vertice, aresta)
 
 
