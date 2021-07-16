@@ -257,12 +257,11 @@ def busca_profundidade_rec_lista(G, s, marca):
         if comp[aux] == 0:
             busca_profundidade_rec_lista(G, aux, marca)
 
-def busca_profundidade_rec_matriz(G, i, j, marca):
-    comp[i][j] = marca
-    for v in G[s]:
-        aux = v[0]
-        if comp[aux] == 0:
-            busca_profundidade_rec_lista(G, aux, marca)
+def busca_profundidade_rec_matriz(G, s, marca):
+    comp[s] = marca
+    for v in range(len(G[s])):
+        if G[s][v] != 0 and comp[v] == 0:
+            busca_profundidade_rec_matriz(G, v, marca)
 
 def componentes_conexos_lista(G):
     global comp
@@ -286,11 +285,10 @@ def componentes_conexos_matriz(G):
     comp = [0 for i in range(len(G))]
     marca = 0
     n = 0
-    for i in range(len(G)):
-        for j in range(len(G)):
-            if comp[i][j] == 0:
-                marca += 1
-                busca_profundidade_rec_matriz(G, i, j, marca)
+    for u in range(len(G)):
+        if comp[u] == 0:
+            marca += 1
+            busca_profundidade_rec_matriz(G, u, marca)
     #Quantidade de componentes conexas = marca
     #Varredura da lista de componentes para separação dos grupos
     n = max(comp)
@@ -315,6 +313,7 @@ busca_largura_lista(G, 0)"""
 #componentes_conexos_lista(G)
 #informacoes_matriz(G, vertice, aresta)
 #busca_largura_matriz(G, 0)
-busca_profundidade_matriz(G, 0)
+#busca_profundidade_matriz(G, 0)
+componentes_conexos_matriz(G)
 
 
