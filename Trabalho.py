@@ -7,7 +7,7 @@ def recebe_dados (nome):
     listaVA = linha.split(' ')
     num_vertice = int(listaVA[0])
     num_aresta = int(listaVA[1])
-    G = representacao(2, arquivo, num_vertice, num_aresta)
+    G = representacao(1, arquivo, num_vertice, num_aresta)
 
     vertice = [i for i in range(num_vertice)]
     aresta = []
@@ -118,8 +118,36 @@ def informacoes_matriz(G, vertices, arestas):
     print(f"Frequencia relativa: ")
     for n in range(menor, (maior+1)):
         print(f"Grau {n}: {grau.count(n)/vertices}")
-#def busca_largura_matriz(grafo, vertice_inicial):
-    #salvar em um arquivo de cada linha o vértice e seu nível na árvore de busca
+def busca_largura_matriz(G, s):
+    desc = [0 for i in range(len(G))]
+    nivel = [None] * len(G)
+    marcado = [False] * len(G)
+    Q = [s]
+    R = [s]
+    desc[s] = 1
+    nivel[s] = 0
+    marcado[s] = True
+    while len(Q) != 0:
+        u = Q.pop(0)
+        for v in range(len(G[u])):
+            if G[u][v] != 0 and desc[v] == 0:
+                Q.append(v)
+                R.append(v)
+                desc[v] = 1
+                if (not marcado[v]):
+                    nivel[v] = nivel[u] + 1
+                    marcado[v] = True
+    #print(R)
+    print("Busca largura: ")
+    for j in range(len(G)):
+        if (nivel[j] != None):
+            print(f"{j}: {nivel[j]}")
+    arquivo = open('busca_largura_matriz.txt', 'w')
+    arquivo.write("vertice:nivel\n")
+    for j in range(len(G)):
+        if (nivel[j] != None):
+            arquivo.write(f"{j}: {nivel[j]}\n")
+
 def busca_largura_lista(G, s):
     desc = [0 for i in range(len(G))]
     nivel = [None] * len(G)
@@ -151,8 +179,41 @@ def busca_largura_lista(G, s):
         if (nivel[j] != None):
             arquivo.write(f"{j}: {nivel[j]}\n")
 
-#def busca_profundidade_matriz(grafo, vertice_inicial):
-    #salvar em um arquivo de cada linha o vértice e seu nível na árvore de busca
+def busca_profundidade_matriz(G, s):
+    desc = [0 for i in range(len(G))]
+    nivel = [None] * len(G)
+    marcado = [False] * len(G)
+    S = [s]
+    R = [s]
+    desc[s] = 1
+    nivel[s] = 0
+    marcado[s] = True
+    while len(S) != 0:
+        u = S[-1]
+        desempilhar = True
+        for i in range(len(G[u])):
+            if G[u][i] != 0 and desc[i] == 0:
+                desempilhar = False
+                S.append(i)
+                R.append(i)
+                desc[i] = 1
+                if (not marcado[i]):
+                    nivel[i] = nivel[u] + 1
+                    marcado[i] = True
+                break
+        if desempilhar:
+            S.pop()
+    #print(R)
+    print("Busca por profundidade:")
+    for j in range(len(G)):
+        if (nivel[j] != None):
+            print(f"{j}: {nivel[j]}")
+    arquivo = open('busca_profundidade_matriz.txt', 'w')
+    arquivo.write("vertice:nivel\n")
+    for j in range(len(G)):
+        if (nivel[j] != None):
+            arquivo.write(f"{j}: {nivel[j]}\n")
+
 def busca_profundidade_lista(G, s):
     desc = [0 for i in range(len(G))]
     nivel = [None] * len(G)
@@ -176,8 +237,8 @@ def busca_profundidade_lista(G, s):
                     nivel[aux] = nivel[u] + 1
                     marcado[aux] = True
                 break
-            if desempilhar:
-                S.pop()
+        if desempilhar:
+            S.pop()
     #print(R)
     print("Busca por profundidade:")
     for j in range(len(G)):
@@ -222,7 +283,7 @@ def componentes_conexos_lista(G):
 
 def componentes_conexos_matriz(G):
     global comp
-    comp = [[0 for i in range(len(G))] for i in range(len(G))]
+    comp = [0 for i in range(len(G))]
     marca = 0
     n = 0
     for i in range(len(G)):
@@ -251,7 +312,9 @@ G = dados[2]
 """informacoes_lista(G, vertice, aresta)
 busca_profundidade_lista(G, 0)
 busca_largura_lista(G, 0)"""
-componentes_conexos_lista(G)
+#componentes_conexos_lista(G)
 #informacoes_matriz(G, vertice, aresta)
+#busca_largura_matriz(G, 0)
+busca_profundidade_matriz(G, 0)
 
 
