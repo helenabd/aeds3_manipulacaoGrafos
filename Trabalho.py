@@ -7,7 +7,7 @@ def recebe_dados (nome):
     listaVA = linha.split(' ')
     num_vertice = int(listaVA[0])
     num_aresta = int(listaVA[1])
-    G = representacao(1, arquivo, num_vertice, num_aresta)
+    G = representacao(2, arquivo, num_vertice, num_aresta)
 
     vertice = [i for i in range(num_vertice)]
     aresta = []
@@ -121,12 +121,10 @@ def informacoes_matriz(G, vertices, arestas):
 def busca_largura_matriz(G, s):
     desc = [0 for i in range(len(G))]
     nivel = [None] * len(G)
-    marcado = [False] * len(G)
     Q = [s]
     R = [s]
     desc[s] = 1
     nivel[s] = 0
-    marcado[s] = True
     while len(Q) != 0:
         u = Q.pop(0)
         for v in range(len(G[u])):
@@ -134,9 +132,7 @@ def busca_largura_matriz(G, s):
                 Q.append(v)
                 R.append(v)
                 desc[v] = 1
-                if (not marcado[v]):
-                    nivel[v] = nivel[u] + 1
-                    marcado[v] = True
+                nivel[v] = nivel[u] + 1
     #print(R)
     print("Busca largura: ")
     for j in range(len(G)):
@@ -151,12 +147,10 @@ def busca_largura_matriz(G, s):
 def busca_largura_lista(G, s):
     desc = [0 for i in range(len(G))]
     nivel = [None] * len(G)
-    marcado = [False] * len(G)
     Q = [s]
     R = [s]
     desc[s] = 1
     nivel[s] = 0
-    marcado[s] = True
     while len(Q) != 0:
         u = Q.pop(0)
         for v in G[u]:
@@ -165,9 +159,7 @@ def busca_largura_lista(G, s):
                 Q.append(aux)
                 R.append(aux)
                 desc[aux] = 1
-                if (not marcado[aux]):
-                    nivel[aux] = nivel[u] + 1
-                    marcado[aux] = True
+                nivel[aux] = nivel[u] + 1
     # print(R)
     print("Busca largura: ")
     for j in range(len(G)):
@@ -182,12 +174,10 @@ def busca_largura_lista(G, s):
 def busca_profundidade_matriz(G, s):
     desc = [0 for i in range(len(G))]
     nivel = [None] * len(G)
-    marcado = [False] * len(G)
     S = [s]
     R = [s]
     desc[s] = 1
     nivel[s] = 0
-    marcado[s] = True
     while len(S) != 0:
         u = S[-1]
         desempilhar = True
@@ -197,9 +187,7 @@ def busca_profundidade_matriz(G, s):
                 S.append(i)
                 R.append(i)
                 desc[i] = 1
-                if (not marcado[i]):
-                    nivel[i] = nivel[u] + 1
-                    marcado[i] = True
+                nivel[i] = nivel[u] + 1
                 break
         if desempilhar:
             S.pop()
@@ -217,12 +205,10 @@ def busca_profundidade_matriz(G, s):
 def busca_profundidade_lista(G, s):
     desc = [0 for i in range(len(G))]
     nivel = [None] * len(G)
-    marcado = [False] * len(G)
     S = [s]
     R = [s]
     desc[s] = 1
     nivel[s] = 0
-    marcado[s] = True
     while len(S) != 0:
         u = S[-1]
         desempilhar = True
@@ -233,9 +219,7 @@ def busca_profundidade_lista(G, s):
                 S.append(aux)
                 R.append(aux)
                 desc[aux] = 1
-                if (not marcado[aux]):
-                    nivel[aux] = nivel[u] + 1
-                    marcado[aux] = True
+                nivel[aux] = nivel[u] + 1
                 break
         if desempilhar:
             S.pop()
@@ -308,12 +292,12 @@ aresta = dados[1]
 G = dados[2]
 #isMatriz = int(input("Tipo de Representação: \n1- Matriz \n2-Lista de Adjacencia: "))
 """informacoes_lista(G, vertice, aresta)
-busca_profundidade_lista(G, 0)
-busca_largura_lista(G, 0)"""
+busca_profundidade_lista(G, 0)"""
+busca_largura_lista(G, 0)
 #componentes_conexos_lista(G)
 #informacoes_matriz(G, vertice, aresta)
 #busca_largura_matriz(G, 0)
 #busca_profundidade_matriz(G, 0)
-componentes_conexos_matriz(G)
+#componentes_conexos_matriz(G)
 
 
