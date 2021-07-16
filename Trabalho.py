@@ -7,7 +7,7 @@ def recebe_dados (nome):
     listaVA = linha.split(' ')
     num_vertice = int(listaVA[0])
     num_aresta = int(listaVA[1])
-    G = representacao(2, arquivo, num_vertice, num_aresta)
+    G = representacao(1, arquivo, num_vertice, num_aresta)
 
     vertice = [i for i in range(num_vertice)]
     aresta = []
@@ -234,18 +234,47 @@ def busca_profundidade_lista(G, s):
         if (nivel[j] != None):
             arquivo.write(f"{j}: {nivel[j]}\n")
 
-def busca_profundidade_rec_lista(G, s, marca):
+def busca_profundidade_comp_conexa_lista(G, s, marca):
+    desc = [0 for i in range(len(G))]
+    S = [s]
+    R = [s]
+    desc[s] = 1
     comp[s] = marca
-    for v in G[s]:
-        aux = v[0]
-        if comp[aux] == 0:
-            busca_profundidade_rec_lista(G, aux, marca)
+    while len(S) != 0:
+        u = S[-1]
+        desempilhar = True
+        for i in G[u]:
+            aux = i[0]
+            if desc[aux] == 0:
+                desempilhar = False
+                S.append(aux)
+                R.append(aux)
+                desc[aux] = 1
+                break
+        comp[u] = marca
+        if desempilhar:
+            S.pop()
 
-def busca_profundidade_rec_matriz(G, s, marca):
+
+def busca_profundidade_comp_conexa_matriz(G, s, marca):
     comp[s] = marca
-    for v in range(len(G[s])):
-        if G[s][v] != 0 and comp[v] == 0:
-            busca_profundidade_rec_matriz(G, v, marca)
+    desc = [0 for i in range(len(G))]
+    S = [s]
+    R = [s]
+    desc[s] = 1
+    while len(S) != 0:
+        u = S[-1]
+        desempilhar = True
+        for i in range(len(G[u])):
+            if G[u][i] != 0 and desc[i] == 0:
+                desempilhar = False
+                S.append(i)
+                R.append(i)
+                desc[i] = 1
+                break
+        comp[u] = marca
+        if desempilhar:
+            S.pop()
 
 def componentes_conexos_lista(G):
     global comp
@@ -255,7 +284,7 @@ def componentes_conexos_lista(G):
     for u in range(len(G)):
         if comp[u] == 0:
             marca += 1
-            busca_profundidade_rec_lista(G, u, marca)
+            busca_profundidade_comp_conexa_lista(G, u, marca)
     #Quantidade de componentes conexas = marca
     #Varredura da lista de componentes para separação dos grupos
     n = max(comp)
@@ -272,7 +301,7 @@ def componentes_conexos_matriz(G):
     for u in range(len(G)):
         if comp[u] == 0:
             marca += 1
-            busca_profundidade_rec_matriz(G, u, marca)
+            busca_profundidade_comp_conexa_matriz(G, u, marca)
     #Quantidade de componentes conexas = marca
     #Varredura da lista de componentes para separação dos grupos
     n = max(comp)
@@ -293,11 +322,11 @@ G = dados[2]
 #isMatriz = int(input("Tipo de Representação: \n1- Matriz \n2-Lista de Adjacencia: "))
 """informacoes_lista(G, vertice, aresta)
 busca_profundidade_lista(G, 0)"""
-busca_largura_lista(G, 0)
+#busca_largura_lista(G, 0)
 #componentes_conexos_lista(G)
 #informacoes_matriz(G, vertice, aresta)
 #busca_largura_matriz(G, 0)
 #busca_profundidade_matriz(G, 0)
-#componentes_conexos_matriz(G)
+componentes_conexos_matriz(G)
 
 
