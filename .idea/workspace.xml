@@ -4,6 +4,9 @@
     <list default="true" id="82e6d852-3b8a-4054-b82f-9c79fae10b7f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Trabalho.py" beforeDir="false" afterPath="$PROJECT_DIR$/Trabalho.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/busca_largura_lista.txt" beforeDir="false" afterPath="$PROJECT_DIR$/busca_largura_lista.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/busca_largura_matriz.txt" beforeDir="false" afterPath="$PROJECT_DIR$/busca_largura_matriz.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/busca_profundidade_lista.txt" beforeDir="false" afterPath="$PROJECT_DIR$/busca_profundidade_lista.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,3 +1,4 @@
+import time
 def recebe_dados(nome, rep):
     arquivo = open(nome, 'r')
     linha = arquivo.readline()
@@ -59,7 +60,8 @@ def informacoes_lista(G, vertices, arestas):
     print(f"Grau médio : {grauMedio}")
     print(f"Frequencia relativa: ")
     for n in range(menor, (maior + 1)):
-        print(f"Grau {n}: {grau.count(n) / vertices}")
+        if grau.count(n) != 0:
+            print(f"Grau {n}: {grau.count(n) / vertices}")
 
 
 def informacoes_matriz(G, vertices, arestas):
@@ -122,7 +124,8 @@ def busca_largura_matriz(G, s):
         if nivel[j] is not None:
             arquivo.write(f"{j}: {nivel[j]}\n")
 
-
+global tempo_inicial
+tempo_inicial = time.time()
 def busca_largura_lista(G, s):
     desc = [0 for i in range(len(G))]
     nivel = [None] * len(G)
@@ -149,6 +152,10 @@ def busca_largura_lista(G, s):
     for j in range(len(G)):
         if nivel[j] is not None:
             arquivo.write(f"{j}: {nivel[j]}\n")
+    maior = max(nivel)
+    print(f'Maior nível: {maior}')
+
+    print("--- %s segundos ---" % (time.time() - tempo_inicial))
 
 
 def busca_profundidade_matriz(G, s):
@@ -214,6 +221,8 @@ def busca_profundidade_lista(G, s):
     for j in range(len(G)):
         if nivel[j] is not None:
             arquivo.write(f"{j}: {nivel[j]}\n")
+
+    print("--- %s segundos ---" % (time.time() - tempo_inicial))
 
 
 def busca_profundidade_comp_conexa_lista(G, s, marca):
